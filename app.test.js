@@ -13,4 +13,32 @@ describe("My Airport server", () => {
       })
       .end(done);
   });
+  test("create a new airport", (done) => {
+    const airport1 = {
+      icao: "ex12",
+      iata: "",
+      name: "Lowell Field",
+      city: "Anchor Point",
+      state: "Alaska",
+      country: "US",
+      elevation: 450,
+      lat: 59.94919968,
+      lon: -151.695999146,
+      tz: "America/Anchorage",
+    };
+    // const airportsCopy = [...airportsJson];
+    // airportsCopy.push(airport1);
+    request(app)
+      .post("/airports")
+      .send(airport1)
+      .expect(201)
+      .end(() => {
+        expect(airports[airports.length - 1]).toEqual(airport1);
+        return done();
+      });
+  });
+  //Unfinished
+  test("retrieve a specific airport", (done) => {
+    request(app).get("/airports/{id}").expect(200).end(done);
+  });
 });
