@@ -11,7 +11,7 @@ app.get("/airports", (req, res) => {
 
 app.post("/airports", (req, res) => {
   airports.push(req.body);
-  console.log(airports);
+  // console.log(airports);
   res.sendStatus(201);
 });
 

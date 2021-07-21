@@ -37,8 +37,12 @@ describe("My Airport server", () => {
         return done();
       });
   });
-  //Unfinished
   test("retrieve a specific airport", (done) => {
-    request(app).get("/airports/{id}").expect(200).end(done);
+    request(app).get("/airports/", (req, res) => {
+      console.log(req.params);
+      res.send(req.params);
+    });
+    // .expect(200)
+    // .end(done);
   });
 });
