@@ -26,8 +26,6 @@ describe("My Airport server", () => {
       lon: -151.695999146,
       tz: "America/Anchorage",
     };
-    // const airportsCopy = [...airportsJson];
-    // airportsCopy.push(airport1);
     request(app)
       .post("/airports")
       .send(airport1)
@@ -37,12 +35,30 @@ describe("My Airport server", () => {
         return done();
       });
   });
-  test("retrieve a specific airport", (done) => {
-    request(app).get("/airports/", (req, res) => {
-      console.log(req.params);
-      res.send(req.params);
-    });
-    // .expect(200)
-    // .end(done);
+  test("retrieve a specific airport", async () => {
+    const response = await request(app).get("/airports/00MO");
+    expect(response.status).toBe(200);
+  });
+  test("update a specific airport", async () => {
+    const updateAirport = {
+      icao: "EXAS",
+      iata: "",
+      name: "Lowell Field",
+      city: "Arizona",
+      state: "Alaska",
+      country: "US",
+      elevation: 600,
+      lat: 59.94919968,
+      lon: -151.695999146,
+      tz: "America/Anchorage",
+    };
+    const response = await request(app)
+      .put("/airports/00MO")
+      .send(updateAirport);
+    expect(response.status).toBe(200);
+  });
+  test("delete a specific airport", async () => {
+    const response = await request(app).delete("/airports/00AL");
+    expect(response.status).toBe(200);
   });
 });
