@@ -36,10 +36,8 @@ app.delete("/airports/:id", (req, res) => {
   const icao = req.params.id;
   const airportToDelete = airports.find((airport) => airport.icao === icao);
   const index = airports.indexOf(airportToDelete);
-  console.log(airports.length);
   airports.splice(index, 1);
-  console.log(airports.length);
-  // res.json(`Airport ${icao} deleted`);
+  res.json(`Airport ${icao} deleted`);
   res.sendStatus(200);
 });
 module.exports = app;
