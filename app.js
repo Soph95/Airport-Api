@@ -11,7 +11,6 @@ app.get("/airports", (req, res) => {
 
 app.post("/airports", (req, res) => {
   airports.push(req.body);
-  // console.log(airports);
   res.sendStatus(201);
 });
 
@@ -19,16 +18,19 @@ app.post("/airports", (req, res) => {
 app.get("/airports/:id", (req, res) => {
   const icao = req.params.id; // e.g. 00AO, 00AK
   const airportToReturn = airports.find((airport) => airport.icao === icao);
-  // console.log(airportToReturn);
-  res.json(airportToReturn);
+  if (airportToReturn) {
+    res.json(airportToReturn);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.put("/airports/:id", (req, res) => {
   const icao = req.params.id;
-  const airportToUpdate = airports.find((airport) => airport.icao === icao);
-  const index = airports.indexOf(airportToUpdate);
-  airports[index] = req.body;
-  console.log(airports[index]);
+  const airportToUpdateIndex = airports.findIndex(
+    (airport) => airport.icao === icao
+  );
+  airports[airportToUpdateIndex] = req.body;
   res.sendStatus(200);
 });
 
@@ -37,7 +39,6 @@ app.delete("/airports/:id", (req, res) => {
   const airportToDelete = airports.find((airport) => airport.icao === icao);
   const index = airports.indexOf(airportToDelete);
   airports.splice(index, 1);
-  res.json(`Airport ${icao} deleted`);
   res.sendStatus(200);
 });
 module.exports = app;

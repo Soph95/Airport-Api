@@ -59,6 +59,10 @@ describe("My Airport server", () => {
   });
   test("delete a specific airport", async () => {
     const response = await request(app).delete("/airports/00AL");
+    const deletedAirport = airports.filter(
+      (airport) => airport.icao === "00AL"
+    );
+    expect(deletedAirport.length).toBe(0);
     expect(response.status).toBe(200);
   });
 });
